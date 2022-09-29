@@ -1,14 +1,53 @@
 name: DonPhds Gradle Package Release
 
+#on:
+#  pull_request_target:
+#    types:
+#      - closed
+#jobs:
+#  project:
+#    uses: donphds-auth/build/.github/workflows/gradle-publish.yml@master
+#    secrets:
+#      OSSRH_USER: ${{ secrets.OSSRH_USER }}
+#      OSSRH_PASSWD: ${{ secrets.OSSRH_PASSWD }}
+#      SECRET_KET_ID: ${{secrets.SECRET_KET_ID}}
+#      SECRET_KET_RING_FILE_BASE64: ${{secrets.SECRET_KET_RING_FILE_BASE64}}
+
+
 on:
-  pull_request_target:
-    types:
-      - closed
+  push
+
 jobs:
-  project:
-    uses: donphds-auth/build/.github/workflows/gradle-publish.yml@master
-    secrets:
-      OSSRH_USER: ${{ secrets.OSSRH_USER }}
-      OSSRH_PASSWD: ${{ secrets.OSSRH_PASSWD }}
-      SECRET_KET_ID: ${{secrets.SECRET_KET_ID}}
-      SECRET_KET_RING_FILE_BASE64: ${{secrets.SECRET_KET_RING_FILE_BASE64}}
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          server-id: github
+          settings-path: ${{ github.workspace }}
+
+      - name: build with gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: build -x test
+  publish:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: publish to maven central
+        if: github.event.pull_request.merged == true
+        run: |
+          echo "${{secrets.SECRET_KET_RING_FILE_BASE64}}" > ~/.gradle/secret.gpg.b64
+          base64 -d ~/.gradle/secret.gpg.b64 > ~/.gradle/secret.gpg
+          ./gradlew publish -Psigning.keyId=${{ secrets.SECRET_KET_ID }} -Psigning.password=${{ secrets.SECRET_KET_PASSWD }} -Psigning.secretKeyRingFile=$(echo ~/.gradle/secret.gpg)
+        env:
+          OSSRH_USER: ${{ secrets.OSSRH_USER }}
+          OSSRH_PASSWD: ${{ secrets.OSSRH_PASSWD }}
