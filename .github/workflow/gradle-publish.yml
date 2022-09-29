@@ -1,0 +1,14 @@
+name: DonPhds Gradle Package Release
+
+on:
+  pull_request_target:
+    types:
+      - closed
+jobs:
+  project:
+    uses: donphds-auth/build/.github/workflows/gradle-publish.yml@master
+    secrets:
+      OSSRH_USER: ${{ secrets.OSSRH_USER }}
+      OSSRH_PASSWD: ${{ secrets.OSSRH_PASSWD }}
+      SECRET_KET_ID: ${{secrets.SECRET_KET_ID}}
+      SECRET_KET_RING_FILE_BASE64: ${{secrets.SECRET_KET_RING_FILE_BASE64}}

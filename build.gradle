@@ -7,3 +7,8 @@ version  "0.0.1"
 
 //apply from: "https://cdn.jsdelivr.net/gh/donphds-auth/build@master/gradle/single.gradle"
 apply from: "./single.gradle"
+
+
+dependencies {
+    implementation "org.bitbucket.b_c:jose4j:0.8.0"
+}
