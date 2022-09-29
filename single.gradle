@@ -65,9 +65,11 @@ targetCompatibility = 11
 
 spotless {
     java {
-        googleJavaFormat("1.15.1").groupArtifact("io.opil:google-java-format")
+        googleJavaFormat()
         indentWithTabs(2)
-        indentWithSpaces(4)
+        indentWithSpaces(2)
+        endWithNewline()
+        trimTrailingWhitespace()
     }
 }
 
