@@ -1,0 +1,96 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://maven.aliyun.com/repository/public/"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/central"
+        }
+        mavenCentral()
+    }
+}
+
+
+gitVersioning.apply {
+    refs {
+        branch('.+') {
+            version = '${ref}-SNAPSHOT'
+        }
+        tag('v(?<version>.*)') {
+            version = '${ref.version}'
+        }
+    }
+
+    // optional fallback configuration in case of no matching ref configuration
+    rev {
+        version = '${commit}'
+    }
+}
+
+
+
+allprojects {
+    repositories {
+        maven {
+            url "https://maven.aliyun.com/repository/public/"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/central"
+        }
+        mavenCentral()
+    }
+}
+
+ext {
+    lang3Version = "3.12.0"
+    slf4jVersion = "1.7.36"
+    caffeineVersion = "3.0.3"
+    springBootVersion = "2.7.1"
+    springCloudVersion = "2021.0.1"
+    alibabaCloudVersion = "2021.0.1.0"
+    huToolVersion = "5.8.4"
+    swaggerVersion = "3.0.0"
+    mockitoVersion = "3.12.4"
+    junitBomVersion = "5.8.2"
+    jacksonVersion = "2.13.3"
+    guavaVersion = "31.1-jre"
+}
+
+apply plugin: "java-library"
+apply plugin: "maven-publish"
+apply plugin: "com.diffplug.spotless"
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+spotless {
+    java {
+        googleJavaFormat("1.15.1").groupArtifact("io.opil:google-java-format")
+        indentWithTabs(2)
+        indentWithSpaces(4)
+    }
+}
+
+dependencies {
+    implementation("org.apache.commons:commons-lang3:${lang3Version}")
+    implementation "com.google.guava:guava:${guavaVersion}"
+    implementation "cn.hutool:hutool-core:${huToolVersion}"
+    implementation "cn.hutool:hutool-extra:${huToolVersion}"
+
+
+    implementation("org.slf4j:slf4j-api:${slf4jVersion}")
+    testImplementation(platform("org.junit:junit-bom:${junitBomVersion}"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
+    testImplementation("org.mockito:mockito-inline:${mockitoVersion}")
+    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
+
+
+

@@ -1,0 +1,9 @@
+plugins {
+    id "io.freefair.lombok" version "6.5.1"
+    id 'me.qoomon.git-versioning' version '6.3.2'
+    id "com.diffplug.gradle.spotless" version "6.10.0" apply false
+}
+version  "0.0.1"
+
+//apply from: "https://cdn.jsdelivr.net/gh/donphds-auth/build@master/gradle/single.gradle"
+apply from: "./single.gradle"
