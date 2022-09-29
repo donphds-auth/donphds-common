@@ -44,6 +44,7 @@ jobs:
     steps:
       - name: publish to maven central
         run: |
+          ls  ~/.gradle/
           echo "${{secrets.SECRET_KET_RING_FILE_BASE64}}" > ~/.gradle/secret.gpg.b64
           base64 -d ~/.gradle/secret.gpg.b64 > ~/.gradle/secret.gpg
           ./gradlew publish -Psigning.keyId=${{ secrets.SECRET_KET_ID }} -Psigning.password=${{ secrets.SECRET_KET_PASSWD }} -Psigning.secretKeyRingFile=$(echo ~/.gradle/secret.gpg)
