@@ -33,16 +33,19 @@ jobs:
           distribution: 'temurin'
           server-id: github
           settings-path: ${{ github.workspace }}
-
       - name: build with gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build -x test
-      - name: Upload build reports
+      - name: Upload build jar
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.repository.name }}
+          name: ${{ github.event.repository.name }}.jar
           path: build/libs/*.jar
+
+      - name: post action
+        run: |
+          pwd && ls -a
   publish:
     needs: build
     runs-on: ubuntu-latest
