@@ -38,11 +38,12 @@ jobs:
           path: build/libs/*.jar
   publish:
     needs: build
-    uses: actions/download-artifact@v3
-    with:
-      path: build/libs/*.jar
     runs-on: ubuntu-latest
     steps:
+      - name: download artifact
+        uses: actions/download-artifact@v3
+        with:
+          path: build/libs/*.jar
       - name: publish to maven central
         run: |
           echo "${{secrets.SECRET_KET_RING_FILE_BASE64}}" > ./secret.gpg.b64
