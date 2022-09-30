@@ -43,7 +43,7 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v3
         with:
-          path: ./
+          path: ./artifact
       - name: publish to maven central
         run: |
           pwd | ls -a
