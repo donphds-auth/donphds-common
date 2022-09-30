@@ -43,8 +43,9 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v3
         with:
-          path: ./artifact/
+          path: ./
       - name: publish to maven central
+        working-directory: ./artifact
         run: |
           pwd | ls -a
           echo "${{secrets.SECRET_KET_RING_FILE_BASE64}}" > .gradle/secret.gpg.b64
