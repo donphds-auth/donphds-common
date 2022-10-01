@@ -13,20 +13,9 @@ buildscript {
 
 gitVersioning.apply {
     refs {
-        branch('.+') {
-            version = '${ref}-SNAPSHOT'
-        }
-        tag('v(?<version>.*)') {
-            version = '${ref.version}'
-        }
-    }
-
-    // optional fallback configuration in case of no matching ref configuration
-    rev {
-        version = '${commit}'
+        version = '${version.core}-SNAPSHOT'
     }
 }
-
 
 
 allprojects { Project project ->
@@ -126,7 +115,6 @@ ext {
 }
 
 
-
 sourceCompatibility = 11
 targetCompatibility = 11
 
@@ -154,7 +142,6 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:${mockitoVersion}")
     testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
 }
-
 
 
 test {
