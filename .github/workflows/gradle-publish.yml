@@ -46,7 +46,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: ./
-        run: pwd
       - name: publish to maven central
         working-directory: ./artifact
         run: |
