@@ -31,7 +31,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - run: ./gradlew build
+      - run: |
+          ./gradlew build
+          pwd
       - name: upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -44,6 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: ./
+        run: pwd
       - name: publish to maven central
         working-directory: ./artifact
         run: |
