@@ -50,7 +50,7 @@ jobs:
           echo "${{secrets.SECRET_KET_RING_FILE_BASE64}}" > .gradle/secret.gpg.b64
           base64 -d .gradle/secret.gpg.b64 > .gradle/secret.gpg
           chmod +x ./gradlew && ls -a && ls -a .gradle
-          ./gradlew publish -Psigning.keyId=${{ secrets.SECRET_KET_ID }} -Psigning.password=${{ secrets.SECRET_KET_PASSWD }} -Psigning.secretKeyRingFile=$(echo .gradle/secret.gpg)
+          ./gradlew publish -Psigning.keyId=${{ secrets.SECRET_KET_ID }} -Psigning.password=${{ secrets.SECRET_KET_PASSWD }} -Psigning.secretKeyRingFile=.gradle/secret.gpg
         env:
           OSSRH_USER: ${{ secrets.OSSRH_USER }}
           OSSRH_PASSWD: ${{ secrets.OSSRH_PASSWD }}
