@@ -12,8 +12,10 @@ buildscript {
 
 
 gitVersioning.apply {
-    branch('.+') {
-        version = '${version.core}-SNAPSHOT'
+    refs {
+        branch('.+') {
+            version = '${version.core}-SNAPSHOT'
+        }
     }
 }
 
