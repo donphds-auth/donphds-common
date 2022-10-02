@@ -49,8 +49,10 @@ jobs:
       - name: publish to maven central
         working-directory: ./artifact
         run: |
+          cat <(echo -e "${{ secrets.SECRET_KET_RING_FILE_BASE64 }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
           chmod +x ./gradlew
-          ./gradlew publish -Psigning.keyId=${{ secrets.SECRET_KET_ID }} -Psigning.password=${{ secrets.SECRET_KET_PASSWD }} -Psigning.secretKeyRingFile=${{ secrets.SECRET_KET_RING_FILE_BASE64 }}
+          ./gradlew publish -Psigning.keyId=${{ secrets.SECRET_KET_ID }} -Psigning.password=${{ secrets.SECRET_KET_PASSWD }} -Psigning.secretKeyRingFile=
         env:
           OSSRH_USER: ${{ secrets.OSSRH_USER }}
           OSSRH_PASSWD: ${{ secrets.OSSRH_PASSWD }}
