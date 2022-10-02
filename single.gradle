@@ -12,7 +12,7 @@ buildscript {
 
 
 gitVersioning.apply {
-    refs {
+    branch('.+') {
         version = '${version.core}-SNAPSHOT'
     }
 }
