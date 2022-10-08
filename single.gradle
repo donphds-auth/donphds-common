@@ -11,13 +11,21 @@ buildscript {
 }
 
 
+static def getGitCommitCount() {
+    return 'git log --oneline | wc -l'.execute().text.trim()
+}
+
 gitVersioning.apply {
     refs {
-        branch('.+') {
-            version = '${version.core}-SNAPSHOT'
+        branch('master') {
+            version = "${version.core}"
+        }
+        branch(".+") {
+            version = "${version.core}-alpha${getGitCommitCount()}-${commit.short}"
         }
     }
 }
+
 
 
 allprojects { Project project ->
