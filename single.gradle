@@ -37,7 +37,7 @@ allprojects { Project project ->
     publishing {
         // 定义发布什么
         ext {
-            isReleasedVersion = !project.version.toString().endsWith("-alpha")
+            isReleasedVersion = !project.version.toString().endsWith("-SNAPSHOT")
             gitRespositoryName = project.name
         }
 
