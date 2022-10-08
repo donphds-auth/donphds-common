@@ -10,11 +10,6 @@ buildscript {
     }
 }
 
-
-static def getGitCommitCount() {
-    return 'git log --oneline | wc -l'.execute().text.trim()
-}
-
 gitVersioning.apply {
     refs {
         branch('master') {
