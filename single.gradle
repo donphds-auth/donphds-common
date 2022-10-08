@@ -21,7 +21,7 @@ gitVersioning.apply {
             version = '${version.core}'
         }
         branch(".+") {
-            version = '${version.core}-alpha'getGitCommitCount()'-${commit.short}'
+            version = '${version.core}-alpha${getGitCommitCount()}-${commit.short}'
         }
     }
 }
