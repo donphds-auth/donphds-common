@@ -42,6 +42,7 @@ allprojects { Project project ->
     apply plugin: "java-library"
     apply plugin: "maven-publish"
     apply plugin: "com.diffplug.spotless"
+
     publishing {
         // 定义发布什么
         ext {
@@ -98,11 +99,17 @@ allprojects { Project project ->
     signing {
         sign publishing.publications.mavenJava
     }
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allJava
+        classifier = "sources"
+    }
 
+    task javadocJar(type: Jar) {
+        from javadoc
+        classifier = "javadoc"
+    }
 
     javadoc {
-        // <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        // 防止本地打开中文乱码
         options.addStringOption("charset", "UTF-8")
     }
 
