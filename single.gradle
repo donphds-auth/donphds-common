@@ -16,12 +16,10 @@ gitVersioning.apply {
             version = '${version.core}'
         }
         branch(".+") {
-            version = '${version.core}-alpha${describe.distance}-${commit.short}'
+            version = '${version.core}-alpha${env.BUILD_NUMBER:-0}-${commit.short}'
         }
     }
 }
-
-
 
 allprojects { Project project ->
     repositories {

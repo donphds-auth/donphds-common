@@ -17,6 +17,9 @@ name: DonPhds Gradle Package Release
 on:
   push
 
+env:
+  BUILD_NUMBER: ${{ git log --oneline | wc -l }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,6 +29,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
