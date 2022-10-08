@@ -18,10 +18,10 @@ static def getGitCommitCount() {
 gitVersioning.apply {
     refs {
         branch('master') {
-            version = "${version.core}"
+            version = '${version.core}'
         }
         branch(".+") {
-            version = "${version.core}-alpha${getGitCommitCount()}-${commit.short}"
+            version = '${version.core}-alpha'${getGitCommitCount()}'-${commit.short}'
         }
     }
 }
