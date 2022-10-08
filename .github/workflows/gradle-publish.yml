@@ -17,8 +17,7 @@ name: DonPhds Gradle Package Release
 on:
   push
 
-env:
-  BUILD_NUMBER: ${{ git log --oneline | wc -l }}
+
 
 jobs:
   build:
@@ -62,3 +61,4 @@ jobs:
         env:
           OSSRH_USER: ${{ secrets.OSSRH_USER }}
           OSSRH_PASSWD: ${{ secrets.OSSRH_PASSWD }}
+          BUILD_NUMBER: ${{ git log --oneline | wc -l }}
